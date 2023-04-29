@@ -53,7 +53,7 @@ class CustomUserManager(BaseUserManager):
             email = self.normalize_email(email)
             self.email_validator(email)
 
-        user = self.create_user(username, password, email, full_name, **extra_fields)
+        user = self.create_user(username=username, password=password, email=email, full_name=full_name, **extra_fields)
         user.save(using=self._db)
         return user
 
