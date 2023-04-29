@@ -132,7 +132,9 @@ logging.config.dictConfig(
             "console": {
                 "format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s",
             },
-            "file": {"format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
+            "file": {
+                "format": "%(asctime)s %(name)-12s %(levelname)-8s %(message)s"},
+            
             "django.server": DEFAULT_LOGGING["formatters"]["django.server"],
         },
         "handlers": {
@@ -145,6 +147,12 @@ logging.config.dictConfig(
                 "class": "logging.FileHandler",
                 "formatter": "file",
                 "filename": "logs/core.log",
+            },
+            "file": {
+                "level": "ERROR",
+                "class": "logging.FileHandler",
+                "formatter": "file",
+                "filename": "logs/error.log",
             },
             "django.server": DEFAULT_LOGGING["handlers"]["django.server"],
         },
@@ -169,3 +177,5 @@ MEDIA_ROOT = BASE_DIR / 'mediafiles'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+AUTH_USER_MODEL = 'users.User'
