@@ -89,7 +89,7 @@ Correct Answer: A. An interception of information on an unsecure website
             # Create a new quiz instance with generated questions
             quiz = Quiz.objects.create(course=course)
             quiz.questions.add(*questions)
-            return Response(status=status.HTTP_201_CREATED)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
