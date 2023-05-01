@@ -20,3 +20,5 @@ SETTING = env('SETTING_FILE')
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', f'core.settings.{SETTING}')
 
 application = get_wsgi_application()
+
+app = application
