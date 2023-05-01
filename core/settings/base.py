@@ -45,13 +45,18 @@ THIRD_PARTY_APPS = [
     'phonenumber_field',
     'djoser',
     'rest_framework_simplejwt',
+    'drf_spectacular',
+    "corsheaders",
+    # 'openai',
 ]
-    
+   
 LOCAL_APPS = [
     'apps.common',
     'apps.users',
     'apps.profiles',
-    'apps.ratings'
+    'apps.ratings',
+    'apps.courses',
+    'apps.questions'
 ]
     
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
@@ -59,11 +64,24 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOWED_ORIGINS = [
+    "https://*",
+    "http://*",
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://*",
+    "https://*",
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -184,7 +202,8 @@ AUTH_USER_MODEL = 'users.User'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -199,6 +218,7 @@ SIMPLE_JWT = {
 }
 
 DJOSER = {
+    'SITE_URL': 'https://2164-102-176-246-49.ngrok-free.app/',
     'LOGIN_FIELD': 'email',
     'USER_CREATE_PASSWORD_RETYPE': True,
     'USERNAME_CHANGED_EMAIL_CONFIRMATION': True,
@@ -208,8 +228,8 @@ DJOSER = {
     'SET_PASSWORD_RETYPE': True,
     'PASSWORD_RESET_CONFIRM_RETYPE': True,
     'USERNAME_RESET_CONFIRM_URL': 'email/reset/confirm/{uid}/{token}',
-    'ACTIVATION_URL': 'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL': True,
+    # 'ACTIVATION_URL': 'activate/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': False,
     'SERIALIZERS': {
         'user_create': 'apps.users.serializers.CreateUserSerializer',
         'user': 'apps.users.serializers.UserSerializer',
@@ -218,6 +238,15 @@ DJOSER = {
     }
 }
 
+SPECTACULAR_SETTINGS = {
+    'TITTLE': 'SMART ED',
+    'DESCRIPTION': 'Smart ED your study buddy to learn and earn',
+    'VERSION': '0.5.0',
+}
+
+OPEN_API_KEY = env('OPEN_API_KEY')
+
+#THIS IS THE LAST SETTING CONFIG FOR BASE DONT PUT ANYTHING AFTER IT 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'smarted@study_budy.com'

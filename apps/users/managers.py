@@ -27,10 +27,11 @@ class CustomUserManager(BaseUserManager):
         
         user = self.model(
             username=username, full_name=full_name, password=password,
-            email=email, **extra_fields
+            email=email, is_active=True, **extra_fields
         )
         user.set_password(password)
         extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_active', True)
         extra_fields.setdefault('is_superuser', False)
         user.save(using=self._db)
         return user
